@@ -1,18 +1,12 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+
+import Body from './components/Body'
 
 function App() {
   
 
   return (
-     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-600">
-        Hello Tailwind CSS!
-      </h1>
-    </div>
+    <Body />
+
   )
 }
 
