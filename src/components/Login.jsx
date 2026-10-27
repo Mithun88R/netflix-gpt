@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const toggleSignUp = () => {
     setIsSignUp(!isSignUp);
+  };
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleSubmit = () => {
+    // Handle form submission logic here
+    console.log("Email:", email.current.value);
+    console.log("Password:", password.current.value);
+
+    const { message } = checkValidData(
+      name.current.value,
+      email.current.value,
+      password.current.value,
+    );
+
+    setErrorMessage(message);
   };
 
   return (
@@ -17,30 +36,39 @@ const Login = () => {
           className="w-full h-screen object-cover"
         />
       </div>
-      <form className="absolute top-1/2 w-3/12 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black text-white bg-opacity-70 p-8 rounded-md">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="absolute top-1/2 w-3/12 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black text-white bg-opacity-70 p-8 rounded-md"
+      >
         <h1 className="text-3xl font-bold  m-2 mb-4">
           {isSignUp ? "Sign Up" : "Sign In"}
         </h1>
         {isSignUp && (
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="border p-2 bg-gray-600 m-2 w-full"
           />
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email Address"
           className="border p-2 bg-gray-600 m-2 w-full"
         />
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="border p-2 bg-gray-600 m-2 w-full"
         />
+        <p className="text-red-500 font-bold p-1 m-2">{errorMessage}</p>
+
         <button
           type="submit"
           className="bg-red-600 text-white p-2 m-2 w-full rounded-md"
+          onClick={handleSubmit}
         >
           {isSignUp ? "Sign Up" : "Sign In"}
         </button>
