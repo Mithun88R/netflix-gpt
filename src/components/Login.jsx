@@ -1,10 +1,21 @@
 import { useState, useRef } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/slice/userSlice";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const toggleSignUp = () => {
     setIsSignUp(!isSignUp);
   };
@@ -16,14 +27,83 @@ const Login = () => {
     // Handle form submission logic here
     console.log("Email:", email.current.value);
     console.log("Password:", password.current.value);
-
     const { message } = checkValidData(
-      name.current.value,
+      isSignUp ? name.current.value : null,
       email.current.value,
       password.current.value,
+      isSignUp,
     );
 
     setErrorMessage(message);
+    if (message) return;
+    if (isSignUp) {
+      // Handle sign-up logic here
+      console.log("Signing up...");
+
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://example.com/jane-q-user/profile.jpg",
+          })
+            .then(() => {
+              // Profile updated!
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+
+              dispatch(
+                addUser({
+                  email: email,
+                  uid: uid,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                }),
+              );
+              navigate("/browse");
+              console.log("User profile updated:", auth.currentUser);
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
+
+          console.log("User signed up:", user);
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          setErrorMessage(errorCode + ": " + errorMessage);
+          // ..
+        });
+    } else {
+      // Handle sign-in logic here
+      console.log("Signing in...");
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("User signed in:", user);
+          navigate("/browse");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + ": " + errorMessage);
+        });
+    }
   };
 
   return (
@@ -67,7 +147,7 @@ const Login = () => {
 
         <button
           type="submit"
-          className="bg-red-600 text-white p-2 m-2 w-full rounded-md"
+          className="bg-red-600 text-white p-2 cursor-pointer m-2 w-full rounded-md"
           onClick={handleSubmit}
         >
           {isSignUp ? "Sign Up" : "Sign In"}
