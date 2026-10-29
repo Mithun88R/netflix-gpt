@@ -1,26 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { removeUser } from "../redux/slice/userSlice";
 import { useNavigate } from "react-router-dom";
+import { addUser, removeUser } from "../redux/slice/userSlice";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
   console.log("User in Header:", user);
-  console.log("User in Header:", user?.user?.displayName);
+  console.log("User in Header:", user?.displayName);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
-        navigate("/");
       })
       .catch((error) => {
         console.error("Error signing out:", error);
       });
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        console.log("User is signed in:", user);
+        const { uid, email, displayName, photoURL } = user;
+
+        dispatch(
+          addUser({
+            email: email,
+            uid: uid,
+            displayName: displayName,
+            photoURL: photoURL,
+          }),
+        );
+        navigate("/browse");
+      } else {
+        // User is signed out
+        console.log("User is signed out");
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+  }, []);
+
   return (
     <div className="flex items-center w-full justify-between p-4 bg-linear-to-b from-black to-transparent  absolute  text-white">
       <img

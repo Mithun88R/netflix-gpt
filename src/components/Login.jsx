@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/slice/userSlice";
 import {
@@ -14,7 +13,7 @@ import { auth } from "../utils/firebase";
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const toggleSignUp = () => {
     setIsSignUp(!isSignUp);
@@ -64,8 +63,6 @@ const Login = () => {
                   photoURL: photoURL,
                 }),
               );
-              navigate("/browse");
-              console.log("User profile updated:", auth.currentUser);
             })
             .catch((error) => {
               // An error occurred
@@ -94,8 +91,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log("User signed in:", user);
-          navigate("/browse");
+
           // ...
         })
         .catch((error) => {
