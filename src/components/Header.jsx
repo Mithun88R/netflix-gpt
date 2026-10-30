@@ -5,6 +5,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../redux/slice/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
+import { Netflix_Logo } from "../utils/constants";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
@@ -24,7 +25,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         console.log("User is signed in:", user);
@@ -46,15 +47,14 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    // unsubscribe from the listener when the component unmounts
+    return () => unsubscribe();
   }, []);
 
   return (
     <div className="flex items-center w-full justify-between p-4 bg-linear-to-b from-black to-transparent  absolute  text-white">
-      <img
-        src="https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAVIENVPMEM3Kn4hVzJseX4N8xPjtBDIpwuFDucWksdxQZ8Ss6Xf8U_vt7ThYYfRmzq0x1CS3nOwTGyVrgADvwfB_tPiK_liS2RjvI40RJSzbKRk-o8b3nCxHfCCnBsyB2XBB9_vRoSmN.svg"
-        alt="Netflix Logo"
-        className="h-12"
-      />
+      <img src={Netflix_Logo} alt="Netflix Logo" className="h-12" />
       {user && (
         <div className="flex items-center space-x-4">
           <img
