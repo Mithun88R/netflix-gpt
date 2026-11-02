@@ -6,11 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../redux/slice/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { Netflix_Logo } from "../utils/constants";
+import { toggleGptSearchView } from "../redux/slice/gptSlice";
+import { SUPPORTED_LANGUAGES } from "../utils/constants";
+import { changeLanguage } from "../redux/slice/configSlice";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
-  console.log("User in Header:", user);
-  console.log("User in Header:", user?.displayName);
+  const language = useSelector((store) => store.config.language);
+  const showGptSearchView = useSelector((store) => store.gpt.showGptSearchView);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -52,11 +56,39 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleGptSearch = () => {
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLanguageChange = (event) => {
+    const selectedLanguage = event.target.value;
+    dispatch(changeLanguage(selectedLanguage));
+  };
+
   return (
     <div className="flex items-center w-full justify-between p-4 bg-linear-to-b from-black to-transparent  absolute z-50  text-white">
       <img src={Netflix_Logo} alt="Netflix Logo" className="h-12" />
       {user && (
         <div className="flex items-center space-x-4">
+          {showGptSearchView && (
+            <select
+              className="bg-black text-white px-4 py-2 p-2 rounded-md cursor-pointer"
+              value={language}
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="bg-blue-500 px-4 py-2 rounded-md cursor-pointer text-white font-semibold hover:bg-blue-600 transition duration-300"
+            onClick={handleGptSearch}
+          >
+            {showGptSearchView ? "Home Page" : "GPT Search"}
+          </button>
           <img
             alt="User Avatar"
             src={user?.photoURL}

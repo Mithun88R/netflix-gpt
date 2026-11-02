@@ -28,3 +28,10 @@ export const UpcomingMovies_API_URL =
   "https://api.themoviedb.org/3/movie/upcoming?page=1";
 
 export const Img_Poster_Path = "https://image.tmdb.org/t/p/w500";
+
+export const SUPPORTED_LANGUAGES = [
+  { code: "en", name: "English" },
+  { code: "hi", name: "Hindi" },
+  { code: "ta", name: "Tamil" },
+  { code: "te", name: "Telugu" },
+];

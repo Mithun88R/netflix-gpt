@@ -30,6 +30,12 @@
     - Build Movie List and Movie Card Component
     - Added custom Hooks and called Movies Lkist Api(Upcoming,Popular,TopRated,Now Playing)
 
+    - GPT Search Feature. Adding a Link in the Header.
+    - GPT Search Bar and GPT Movie Suggestion components created
+    - Multi Language logic implemented in search Bar Component
+    - gptSlice and configSlice created.
+    - languageConstants and SUPPORTED_LANGUAGE in constants created
+
 # Features
 
     - Login / Sign Up
