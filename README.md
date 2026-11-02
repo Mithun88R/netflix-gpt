@@ -25,6 +25,10 @@
     - added moviesSlice and added reducer actions function in it.
     - implemented the movieSlice in store.
     - Embedded the youtube video in the VideoBackGround Component and make it autoplay and mute it
+    - Added Tailwindcss and Make Main Container Awesome
+    - Build Secondary Component
+    - Build Movie List and Movie Card Component
+    - Added custom Hooks and called Movies Lkist Api(Upcoming,Popular,TopRated,Now Playing)
 
 # Features
 
