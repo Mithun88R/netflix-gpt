@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+/* Hide all browser and element scrollbars */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Prevent horizontal overflow */
+html,
+body,
+#root {
+  overflow-x: hidden;
+}
