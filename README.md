@@ -35,6 +35,16 @@
     - Multi Language logic implemented in search Bar Component
     - gptSlice and configSlice created.
     - languageConstants and SUPPORTED_LANGUAGE in constants created
+    - got API_KEY from Platform.openai.com ❌
+    - installed npm i openai❌
+    - got API_KEY from gemini from https://aistudio.google.com/api-keys
+    - Click Create API Key.
+    - Select or create a Google Cloud project if prompted.
+    - Copy the generated API key.
+    - Installed npm i @google/genai
+    - created gemini.js in utils
+    - Created GptSearchBar and GptMovieSuggestion components
+    - created customHOOK for useFetchTmdbMovieDetails
 
 # Features
 

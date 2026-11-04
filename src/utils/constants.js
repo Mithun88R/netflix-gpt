@@ -10,8 +10,7 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYzhkYzI5ZDNkOWZkY2EzNDQ3MTkzMzdiYzk5YTliMSIsIm5iZiI6MTc5MzI1MTE5OS4wNjIsInN1YiI6IjZhZTJkNzdmZjM1MDZjMWRiZWE2NzdiMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TsSC1y2PQVWJyn6buqDxff0rAdyw7pIkcHsonkyKZZI",
+    Authorization: "Bearer " + import.meta.env.VITE_TMDB_API_KEY,
   },
 };
 
@@ -35,3 +34,5 @@ export const SUPPORTED_LANGUAGES = [
   { code: "ta", name: "Tamil" },
   { code: "te", name: "Telugu" },
 ];
+
+export const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;

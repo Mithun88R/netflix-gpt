@@ -8,6 +8,7 @@ import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
+import { GEMINI_API_KEY } from "../utils/constants";
 
 const Browse = () => {
   const showGptSearchView = useSelector((store) => store.gpt.showGptSearchView);
@@ -15,7 +16,7 @@ const Browse = () => {
   useUpcomingMovies();
   usePopularMovies();
   useTopRatedMovies();
-
+  console.log(GEMINI_API_KEY ? "API Key Loaded" : "API Key Missing");
   return (
     <div>
       <Header />
