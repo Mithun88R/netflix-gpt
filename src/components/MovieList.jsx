@@ -5,7 +5,7 @@ const MovieList = ({ title, movies }) => {
   console.log("Movies List:", movies);
   return (
     <div className="p-4">
-      <h1 className="text-3xl py-4 text-white">{title}</h1>
+      <h1 className="text-2xl md:text-3xl py-4 text-white">{title}</h1>
       <div className="flex overflow-x-auto  overflow-y-hidden scrollbar-hide">
         <div className="flex ">
           {movies?.map((movie) => (

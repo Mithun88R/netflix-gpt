@@ -66,8 +66,12 @@ const Header = () => {
   };
 
   return (
-    <div className="flex items-center w-full justify-between p-4 bg-linear-to-b from-black to-transparent  absolute z-50  text-white">
-      <img src={Netflix_Logo} alt="Netflix Logo" className="h-12" />
+    <div className="flex flex-col md:flex-row w-full justify-between px-8 py-2 bg-linear-to-b from-black to-transparent  absolute z-40  text-white">
+      <img
+        src={Netflix_Logo}
+        alt="Netflix Logo"
+        className="w-44 mx-auto md:mx-0"
+      />
       {user && (
         <div className="flex items-center space-x-4">
           {showGptSearchView && (

@@ -5,7 +5,7 @@ import { Netflix_Background } from "../utils/constants";
 
 const GptSearch = () => {
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen  md:p-0 relative">
       <div className="fixed inset-0 -z-10">
         <img
           src={Netflix_Background}
